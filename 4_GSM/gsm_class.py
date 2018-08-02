@@ -1,0 +1,108 @@
+
+import serial
+import time
+import sys
+
+
+class gsm():
+    echo_on = 1
+    def __init__(self,serialName):
+        gsm_ser = serial.Serial()
+        gsm_ser.port = serialName
+        gsm_ser.baudrate = 9600
+        gsm_ser.timeout = 3
+        gsm_ser.xonxoff = False
+        gsm_ser.rtscts = False
+        gsm_ser.bytesize = serial.EIGHTBITS
+        gsm_ser.parity = serial.PARITY_NONE
+        gsm_ser.stopbits = serial.STOPBITS_ONE
+        try:
+            gsm_ser.open()
+            gsm_ser.flushInput()
+            gsm_ser.flushOutput()
+        except:
+            print 'Cannot open serial port'
+        self.serialPort = gsm_ser
+
+    def sendCommand(self,at_com):
+        self.serialPort.write(at_com + '\r')
+
+
+    def getResponse(self):
+        self.serialPort.flushInput()
+        self.serialPort.flushOutput()
+#        if gsm.echo_on == 1:
+#            response = self.serialPort.readline()  # comment this line if echo off
+        response = self.serialPort.readline()
+        response = response + self.serialPort.readline()
+        response = response.rstrip()
+        return response
+
+
+    def getPrompt(self):
+        if gsm.echo_on == 1:
+            response = self.serialPort.readline()  # comment this line if echo off
+        if (self.serialPort.readline(1) == '>'):
+            return True
+        else:
+            return False
+
+
+    def sendMessage(self,phone_number, message):
+        flag = False
+        self.sendCommand("AT+CMGF=1")
+        print self.getResponse()
+        time.sleep(1)
+        self.sendCommand('AT+CMGS=\"' + phone_number + '\"')
+        print self.getResponse()
+        time.sleep(2)
+        self.serialPort.write(message)
+        self.serialPort.write('\x1A')  # send messsage if prompt received
+        flag = True
+        print self.getResponse()
+        time.sleep(1)
+        return flag
+
+    def readMessage(self):
+        flag = False
+        message = ''
+        self.sendCommand("AT+CMGF=1")
+        print self.getResponse()
+        self.sendCommand('AT+CMGR=1')
+        self.serialPort.flushInput()
+        self.serialPort.flushOutput()
+        self.serialPort.readline().rstrip()
+        while True:
+            response = self.serialPort.readline().rstrip()
+            if len(response)>1:
+                if response == 'OK':
+                    break
+                else:
+                    message = message +" " + response
+                    flag = True
+
+        return flag,message
+
+    def close(self):
+        self.serialPort.close()
+
+
+
+
+
+#if this module run as main program
+if __name__ == "__main__":
+    GSM = gsm("/dev/ttyUSB0")
+
+    GSM.sendCommand("AT")
+    print GSM.getResponse()
+    time.sleep(1)
+
+    if (GSM.sendMessage("9029690630", "JTS \n GSM TESTING") == True):
+        print 'Message sending Success'
+    else:
+        print 'Message sending Failed'
+    time.sleep(1)
+    GSM.close()
+
+

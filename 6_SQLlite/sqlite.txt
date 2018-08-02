@@ -1,0 +1,12 @@
+sqlite
+
+sudo apt-get install sqlite3
+
+
+sqlite gui viewer
+https://github.com/sqlitebrowser/sqlitebrowser
+
+
+
+
+

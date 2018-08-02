@@ -1,0 +1,10 @@
+Qt4 installation with python 2.7
+prefer following link
+1> http://wiki.qt.io/Apt-get_Qt4_on_the_Raspberry_Pi
+2> https://www.youtube.com/watch?v=ZcfUjxji-YA
+3> sudo apt-get install pyqt4-dev-tools
+pyuic4 hello_world.ui > hello.py
+
+for qt4 sql
+1> apt-get install python-qt4-sql
+2> apt-get install libqt4-sql-mysql

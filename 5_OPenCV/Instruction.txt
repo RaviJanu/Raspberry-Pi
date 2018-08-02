@@ -1,0 +1,11 @@
+First use OpenCv iso for rpi boot
+This code with PiCAM and USB Cam
+1> run time video capture and image saving
+2> traning image 
+3> face recognization
+4> ocr
+
+
+
+OpenCv for pi cam is totally tested 
+but for usb cam few changes require in 1> setup 
