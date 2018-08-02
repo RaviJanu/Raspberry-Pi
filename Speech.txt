@@ -1,0 +1,15 @@
+for speack out from python code
+
+1> in terminal window
+sudo apt-get install espeak
+
+2> in python code use
+from subprocess import call
+
+call([espeak Hello_Ravi_Janu],shell=True)
+
+
+
+
+
+
