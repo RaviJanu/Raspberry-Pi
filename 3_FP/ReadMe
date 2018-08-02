@@ -1,0 +1,19 @@
+//go to terminal window
+1> sudo apt-get update 
+2> sudo apt-get install python-tk    // to install tkinter for GUI
+//for finger print lib, follow this link
+1>    https://circuitdigest.com/microcontroller-projects/raspberry-pi-fingerprint-sensor-interfacing
+2>    https://github.com/bastianraschke/pyfingerprint
+// then connect the finger print module and check the USB port num on terminal window
+ls /dev/ttyUSB*
+u will get /dev/ttyUSB0 or /dev/ttyUSB1
+copy usbport name(ex: /dev/ttyUSB0)
+put into the code
+>def main_init():
+       >     fp.Init('/dev/ttyUSB0') 
+then run the code
+
+
+
+
+
