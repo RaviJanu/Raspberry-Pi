@@ -1,4 +1,6 @@
-#!!aum!!
+#!!AUM!!
+#Author: Raviprakash Janu
+
 import RPi.GPIO as GPIO
 import time
 import sys
